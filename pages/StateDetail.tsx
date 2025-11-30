@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useStates } from '../contexts/StateContext';
 import { MetricMeter } from '../components/MetricMeter';
-import { MapPin, Calendar, ArrowLeft, Shield, Smile, Wind, Zap, Briefcase, Landmark, Loader, Languages, Info } from 'lucide-react';
+import { MapPin, Calendar, ArrowLeft, Shield, Smile, Wind, Zap, Briefcase, Landmark, Loader, Languages, Info, Sparkles } from 'lucide-react';
 import { Activity } from '../types';
 
 export const StateDetail: React.FC = () => {
@@ -81,6 +81,15 @@ export const StateDetail: React.FC = () => {
             <section>
               <h2 className="text-2xl font-bold text-slate-800 mb-4">About</h2>
               <p className="text-slate-600 text-lg leading-relaxed">{state.description}</p>
+              
+              {/* Vibe Check Card */}
+              <div className="mt-6 bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white p-6 rounded-2xl shadow-lg transform hover:scale-[1.01] transition-transform">
+                <div className="flex items-center gap-2 mb-2">
+                  <Sparkles size={24} className="text-yellow-300" />
+                  <h3 className="font-bold text-lg">Internet Vibe Check</h3>
+                </div>
+                <p className="text-white/90 font-medium italic text-lg">"{state.funnyStereotype}"</p>
+              </div>
             </section>
 
             <section className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
@@ -124,11 +133,25 @@ export const StateDetail: React.FC = () => {
               <h2 className="text-2xl font-bold text-slate-800 mb-6">Key Indicators</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* AQI Card */}
-                <div className={`p-4 rounded-xl border ${getAQIColor(state.aqi.value)}`}>
-                  <div className="text-xs font-bold uppercase opacity-70 mb-1">Air Quality</div>
-                  <div className="text-3xl font-extrabold">{state.aqi.value}</div>
-                  <div className="font-medium mt-1">{state.aqi.label}</div>
-                  <div className="text-xs opacity-60 mt-2">Real-time Data</div>
+                <div className={`p-4 rounded-xl border ${getAQIColor(state.aqi.value)} flex flex-col justify-between`}>
+                  <div>
+                    <div className="text-xs font-bold uppercase opacity-70 mb-1">Air Quality (US AQI)</div>
+                    <div className="text-3xl font-extrabold">{state.aqi.value}</div>
+                    <div className="font-medium mt-1">{state.aqi.label}</div>
+                  </div>
+                  
+                  {state.europeanAqi && (
+                    <div className="mt-4 pt-4 border-t border-black/10 text-xs space-y-1">
+                      <div className="font-bold opacity-80 mb-1">European AQI Breakdown</div>
+                      <div className="flex justify-between"><span>PM2.5:</span> <span>{state.europeanAqi.pm2_5}</span></div>
+                      <div className="flex justify-between"><span>PM10:</span> <span>{state.europeanAqi.pm10}</span></div>
+                      <div className="flex justify-between"><span>NO2:</span> <span>{state.europeanAqi.no2}</span></div>
+                      <div className="flex justify-between"><span>O3:</span> <span>{state.europeanAqi.o3}</span></div>
+                      <div className="flex justify-between"><span>SO2:</span> <span>{state.europeanAqi.so2}</span></div>
+                    </div>
+                  )}
+                  
+                  <div className="text-xs opacity-60 mt-2 text-right">Real-time</div>
                 </div>
 
                 {/* Hospitality */}

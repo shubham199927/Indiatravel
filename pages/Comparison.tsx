@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useStates } from '../contexts/StateContext';
 import { MetricMeter } from '../components/MetricMeter';
-import { ArrowLeft, X, Loader } from 'lucide-react';
+import { ArrowLeft, X, Loader, Sparkles } from 'lucide-react';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, Tooltip } from 'recharts';
 
 interface ComparisonProps {
@@ -76,7 +76,7 @@ export const Comparison: React.FC<ComparisonProps> = ({ ids, setComparisonList }
             <table className="w-full min-w-[800px]">
               <thead>
                 <tr className="bg-slate-100">
-                  <th className="p-4 text-left w-48 text-slate-500 font-medium">Metric</th>
+                  <th className="p-4 text-left w-64 text-slate-500 font-medium">Metric</th>
                   {selectedStates.map((state, idx) => (
                     <th key={state.id} className="p-4 text-left min-w-[250px] relative">
                        <button 
@@ -97,6 +97,18 @@ export const Comparison: React.FC<ComparisonProps> = ({ ids, setComparisonList }
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
+                 {/* Stereotype */}
+                <tr>
+                  <td className="p-4 font-semibold text-slate-700 flex items-center gap-2">
+                    Local Stereotype <Sparkles size={14} className="text-purple-500" />
+                  </td>
+                  {selectedStates.map(state => (
+                    <td key={state.id} className="p-4 italic text-purple-700 bg-purple-50/50 text-sm">
+                      "{state.funnyStereotype}"
+                    </td>
+                  ))}
+                </tr>
+
                 {/* Languages */}
                 <tr>
                   <td className="p-4 font-semibold text-slate-700">Languages</td>
@@ -107,9 +119,9 @@ export const Comparison: React.FC<ComparisonProps> = ({ ids, setComparisonList }
                   ))}
                 </tr>
 
-                {/* AQI */}
-                <tr>
-                  <td className="p-4 font-semibold text-slate-700">Air Quality (AQI)</td>
+                {/* AQI US */}
+                <tr className="bg-slate-50/50">
+                  <td className="p-4 font-semibold text-slate-700">US AQI (Overall)</td>
                   {selectedStates.map(state => (
                     <td key={state.id} className="p-4">
                       <div className="flex items-center gap-2">
@@ -122,13 +134,55 @@ export const Comparison: React.FC<ComparisonProps> = ({ ids, setComparisonList }
                           {state.aqi.label}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-500 mt-1">Lower is better. (Live data)</p>
+                      <p className="text-xs text-slate-500 mt-1">Real-time data</p>
+                    </td>
+                  ))}
+                </tr>
+
+                {/* European AQI Metrics */}
+                <tr>
+                  <td className="p-4 font-semibold text-slate-700">European AQI PM2.5</td>
+                  {selectedStates.map(state => (
+                    <td key={state.id} className="p-4 font-mono text-sm">
+                      {state.europeanAqi ? state.europeanAqi.pm2_5 : 'N/A'}
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="p-4 font-semibold text-slate-700">European AQI PM10</td>
+                  {selectedStates.map(state => (
+                    <td key={state.id} className="p-4 font-mono text-sm">
+                      {state.europeanAqi ? state.europeanAqi.pm10 : 'N/A'}
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="p-4 font-semibold text-slate-700">European AQI NO2</td>
+                  {selectedStates.map(state => (
+                    <td key={state.id} className="p-4 font-mono text-sm">
+                      {state.europeanAqi ? state.europeanAqi.no2 : 'N/A'}
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="p-4 font-semibold text-slate-700">European AQI O3</td>
+                  {selectedStates.map(state => (
+                    <td key={state.id} className="p-4 font-mono text-sm">
+                      {state.europeanAqi ? state.europeanAqi.o3 : 'N/A'}
+                    </td>
+                  ))}
+                </tr>
+                 <tr>
+                  <td className="p-4 font-semibold text-slate-700">European AQI SO2</td>
+                  {selectedStates.map(state => (
+                    <td key={state.id} className="p-4 font-mono text-sm">
+                      {state.europeanAqi ? state.europeanAqi.so2 : 'N/A'}
                     </td>
                   ))}
                 </tr>
 
                 {/* Women's Safety */}
-                <tr>
+                <tr className="border-t-4 border-slate-100">
                   <td className="p-4 font-semibold text-slate-700">Women's Safety</td>
                   {selectedStates.map(state => (
                     <td key={state.id} className="p-4">

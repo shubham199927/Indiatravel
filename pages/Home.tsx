@@ -72,7 +72,7 @@ export const Home: React.FC<HomeProps> = ({ comparisonList, setComparisonList })
           <input 
             type="text" 
             placeholder="Search state..." 
-            className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-colors hover:bg-slate-100 focus:bg-white"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
